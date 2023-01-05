@@ -5,7 +5,6 @@
     {
         List<Person> people = new List<Person>()
         {
-            //TODO in DB
             new Person("Ali", "Quattan", DateTime.Today, "ali@adesso.com"),
             new Person("Swen", "Elter", DateTime.Today.AddDays(+1), "sven@adesso.com"),
             new Person("Markus", "Lochner", DateTime.Today.AddDays(+2), "markus@adesso.com"),

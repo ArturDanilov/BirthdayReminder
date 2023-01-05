@@ -1,4 +1,6 @@
 ﻿using BirthdayReminder.Database;
+using System.Globalization;
+using System.Security.Cryptography.X509Certificates;
 
 namespace BirthdayReminder
 {
@@ -23,16 +25,30 @@ namespace BirthdayReminder
             //    Console.WriteLine(item + "\n");
             //}
 
+            BirthdayService birthdayService = new BirthdayService();
+            var people = birthdayService.AllPeople();
+
+            foreach (var item in people)
+            {
+                Console.WriteLine($"{item.FullName} {item.BirthdayDate.ToString("d", CultureInfo.GetCultureInfo("de-DE"))}");
+            }
+
+            //var peopleList = birthdayService.FindByDate(DateTime.Now("yyyy.MM.dd"));
+
+
+            Console.ReadLine();
+        }
+        static void CreateData()
+        {
             using (BirthdayContext context = new BirthdayContext())
             {
                 context.Add(new Person("Ali", "Quattan", new DateTime(1970, 11, 01), "ali@adesso.com"));
                 context.Add(new Person("Swen", "Elter", new DateTime(1980, 01, 01), "sven@adesso.com"));
                 context.Add(new Person("Markus", "Lochner", new DateTime(1990, 01, 01), "markus@adesso.com"));
                 context.Add(new Person("Artur", "Danilov", new DateTime(1960, 01, 01), "artur@adesso.com"));
+
                 context.SaveChanges();
             }
-
-            Console.ReadLine();
         }
     }
 }

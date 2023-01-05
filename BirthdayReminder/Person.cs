@@ -12,6 +12,7 @@ namespace BirthdayReminder
         public DateTime BirthdayDate { get; set; }
         public string Email { get; set; }
         public string FullName => $"{FirstName} {LastName}"; //TODO testen
+        //first und dann last
         public Person(string lastName, string firstName, DateTime birthdayDate, string email)
         {
             this.LastName = lastName;
