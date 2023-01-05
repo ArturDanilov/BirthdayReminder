@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BirthdayReminder", "BirthdayReminder\BirthdayReminder.csproj", "{732012AB-CF63-43C4-B69E-C1691F2A55F6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BirthdayReminderNUnitTests", "BirthdayReminderNUnitTests\BirthdayReminderNUnitTests.csproj", "{58EB96C2-A729-4960-BAA8-CD50E4CEC886}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{732012AB-CF63-43C4-B69E-C1691F2A55F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{732012AB-CF63-43C4-B69E-C1691F2A55F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{732012AB-CF63-43C4-B69E-C1691F2A55F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{732012AB-CF63-43C4-B69E-C1691F2A55F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58EB96C2-A729-4960-BAA8-CD50E4CEC886}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58EB96C2-A729-4960-BAA8-CD50E4CEC886}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58EB96C2-A729-4960-BAA8-CD50E4CEC886}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58EB96C2-A729-4960-BAA8-CD50E4CEC886}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CB7B4932-CB98-46D4-ABFC-D625CC72FE61}
+	EndGlobalSection
+EndGlobal
