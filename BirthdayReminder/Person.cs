@@ -1,17 +1,24 @@
-﻿namespace BirthdayReminder
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BirthdayReminder
 {
     public class Person
     {
-        public string Name { get; set; }
+        [Key]
+        public Guid Id { get; set; }
+
+        public string LastName { get; set; }
         public string FirstName { get; set; }
         public DateTime BirthdayDate { get; set; }
         public string Email { get; set; }
-        public Person(string name, string firstName, DateTime birthdayDate, string email)
+        public string FullName => $"{FirstName} {LastName}"; //TODO testen
+        public Person(string lastName, string firstName, DateTime birthdayDate, string email)
         {
-            this.Name = name;
+            this.LastName = lastName;
             this.FirstName = firstName;
             this.BirthdayDate = birthdayDate;
             this.Email = email;
+            this.Id= Guid.NewGuid();
         }
     }
 }
