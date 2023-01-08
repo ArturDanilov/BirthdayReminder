@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BirthdayReminder
+namespace BirthdayReminder.Models
 {
     public class Person
     {
@@ -15,11 +15,11 @@ namespace BirthdayReminder
         //first und dann last
         public Person(string lastName, string firstName, DateTime birthdayDate, string email)
         {
-            this.LastName = lastName;
-            this.FirstName = firstName;
-            this.BirthdayDate = birthdayDate;
-            this.Email = email;
-            this.Id= Guid.NewGuid();
+            LastName = lastName;
+            FirstName = firstName;
+            BirthdayDate = birthdayDate;
+            Email = email;
+            Id = Guid.NewGuid();
         }
     }
 }

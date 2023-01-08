@@ -14,12 +14,13 @@ namespace BirthdayReminderNUnitTests
         {
             // Arrange
             GreethingBuilder greethingBuilder = new GreethingBuilder();
+            DateTime birthDate = DateTime.Today;
 
             // Act
             string actual = greethingBuilder.GetAllPersonsNamesTodayBirthday();
 
             //Assert
-            Assert.AreEqual("Schidiger: Ali Quattan\nBirthday: 05.01.2023 00:00:00\nMail: ali@adesso.com", actual);
+            Assert.AreEqual($"Schidiger: Ali Quattan\nBirthday: {birthDate}\nMail: ali@adesso.com", actual);
         }
 
         [Test]
@@ -27,12 +28,13 @@ namespace BirthdayReminderNUnitTests
         {
             // Arrange
             GreethingBuilder greethingBuilder = new GreethingBuilder();
+            DateTime birthDate = DateTime.Today.AddDays(+1);
 
             // Act
             string actual = greethingBuilder.GetAllPersonsNamesTomorowBirthday();
 
             //Assert
-            Assert.AreEqual("Schidiger: Swen Elter\nBirthday: 06.01.2023 00:00:00\nMail: sven@adesso.com", actual);
+            Assert.AreEqual($"Schidiger: Swen Elter\nBirthday: {birthDate}\nMail: sven@adesso.com", actual);
         }
 
         //TODO Fullname

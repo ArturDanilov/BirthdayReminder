@@ -1,4 +1,6 @@
-﻿namespace BirthdayReminder
+﻿using BirthdayReminder.Models;
+
+namespace BirthdayReminder
 {
     //TODO umbenenen
     public class GreethingBuilder
@@ -17,7 +19,7 @@
                 .Where(x => x.BirthdayDate.Month == DateTime.Today.Month && x.BirthdayDate.Day == DateTime.Today.Day)
                 .Select(x => "Schidiger: " + x.LastName + " " + x.FirstName + "\nBirthday: " + x.BirthdayDate + "\nMail: " + x.Email)
                 .ToList();
-            
+
             return todayBirthday;
         }
         public string GetAllPersonsNamesTodayBirthday()
@@ -35,13 +37,13 @@
                 .Where(x => x.BirthdayDate.Month == DateTime.Today.Month && x.BirthdayDate.Day == DateTime.Today.Day + 1)
                 .Select(x => "Schidiger: " + x.LastName + " " + x.FirstName + "\nBirthday: " + x.BirthdayDate + "\nMail: " + x.Email)
                 .ToList();
-            
+
             return tomorowBirthday;
         }
         public string GetAllPersonsNamesTomorowBirthday()
         {
             string namesOfPersonTomorow = "";
-            
+
             foreach (var item in GetAllPersonsWithTomorowBirthday())
                 namesOfPersonTomorow += item;
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BirthdayReminder.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BirthdayReminder.Database
 {

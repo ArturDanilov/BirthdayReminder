@@ -1,4 +1,6 @@
 ﻿using BirthdayReminder.Database;
+using BirthdayReminder.Models;
+using BirthdayReminder.Services;
 using System.Globalization;
 using System.Security.Cryptography.X509Certificates;
 
