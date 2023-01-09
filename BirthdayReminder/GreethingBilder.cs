@@ -3,7 +3,7 @@
 namespace BirthdayReminder
 {
     //TODO umbenenen
-    public class GreethingBuilder
+    public class PersonBuilder
     {
         List<Person> people = new List<Person>()
         {
@@ -17,7 +17,7 @@ namespace BirthdayReminder
         {
             var todayBirthday = people
                 .Where(x => x.BirthdayDate.Month == DateTime.Today.Month && x.BirthdayDate.Day == DateTime.Today.Day)
-                .Select(x => "Schidiger: " + x.LastName + " " + x.FirstName + "\nBirthday: " + x.BirthdayDate + "\nMail: " + x.Email)
+                .Select(x => "Schidiger: " + x.FirstName + " " + x.LastName + "\nBirthday: " + x.BirthdayDate + "\nMail: " + x.Email)
                 .ToList();
 
             return todayBirthday;
@@ -35,7 +35,7 @@ namespace BirthdayReminder
         {
             var tomorowBirthday = people
                 .Where(x => x.BirthdayDate.Month == DateTime.Today.Month && x.BirthdayDate.Day == DateTime.Today.Day + 1)
-                .Select(x => "Schidiger: " + x.LastName + " " + x.FirstName + "\nBirthday: " + x.BirthdayDate + "\nMail: " + x.Email)
+                .Select(x => "Schidiger: " + x.FirstName + " " + x.LastName + "\nBirthday: " + x.BirthdayDate + "\nMail: " + x.Email)
                 .ToList();
 
             return tomorowBirthday;

@@ -27,6 +27,9 @@ namespace BirthdayReminder
             //    Console.WriteLine(item + "\n");
             //}
 
+            //var peopleList = birthdayService.FindByDate(DateTime.Now("yyyy.MM.dd"));
+
+
             BirthdayService birthdayService = new BirthdayService();
             var people = birthdayService.AllPeople();
 
@@ -35,8 +38,7 @@ namespace BirthdayReminder
                 Console.WriteLine($"{item.FullName} {item.BirthdayDate.ToString("d", CultureInfo.GetCultureInfo("de-DE"))}");
             }
 
-            //var peopleList = birthdayService.FindByDate(DateTime.Now("yyyy.MM.dd"));
-
+            //CreateData();
 
             Console.ReadLine();
         }

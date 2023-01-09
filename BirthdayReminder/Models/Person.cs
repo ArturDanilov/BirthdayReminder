@@ -7,19 +7,21 @@ namespace BirthdayReminder.Models
         [Key]
         public Guid Id { get; set; }
 
-        public string LastName { get; set; }
         public string FirstName { get; set; }
+        public string LastName { get; set; }
         public DateTime BirthdayDate { get; set; }
         public string Email { get; set; }
-        public string FullName => $"{FirstName} {LastName}"; //TODO testen
-        //first und dann last
-        public Person(string lastName, string firstName, DateTime birthdayDate, string email)
+        public string FullName => $"{FirstName} {LastName}"; //!TODO testen
+
+        public Person( string firstName,string lastName, DateTime birthdayDate, string email) //!TODO first und dann last
         {
-            LastName = lastName;
             FirstName = firstName;
+            LastName = lastName;
             BirthdayDate = birthdayDate;
             Email = email;
             Id = Guid.NewGuid();
         }
+        public Person() {} 
+
     }
 }

@@ -1,4 +1,5 @@
 using BirthdayReminder;
+using BirthdayReminder.Models;
 
 namespace BirthdayReminderNUnitTests
 {
@@ -13,7 +14,7 @@ namespace BirthdayReminderNUnitTests
         public void GreeztingBilder_GreethingPersonToday_ExpectOneName()
         {
             // Arrange
-            GreethingBuilder greethingBuilder = new GreethingBuilder();
+            PersonBuilder greethingBuilder = new PersonBuilder();
             DateTime birthDate = DateTime.Today;
 
             // Act
@@ -27,7 +28,7 @@ namespace BirthdayReminderNUnitTests
         public void GreeztingBilder_GreethingPersonTomorow_ExpectOneName()
         {
             // Arrange
-            GreethingBuilder greethingBuilder = new GreethingBuilder();
+            PersonBuilder greethingBuilder = new PersonBuilder();
             DateTime birthDate = DateTime.Today.AddDays(+1);
 
             // Act
@@ -38,5 +39,22 @@ namespace BirthdayReminderNUnitTests
         }
 
         //TODO Fullname
+        [Test]
+        public void GreeztingBilder_ShowFullName_ExpectFirsNameAndLastNameReturnFirstNamePlusLastName()
+        {
+            // Arrange
+            Person person = new Person()
+            {
+                FirstName = "Anna",
+                LastName = "Conda"
+            };
+
+            // Act
+            string actual = $"{person.FirstName} {person.LastName}";
+
+            //Assert
+            Assert.That(actual, Is.EqualTo(person.FullName));
+        }
+
     }
 }
