@@ -1,7 +1,5 @@
 ﻿using BirthdayReminder.Database;
 using BirthdayReminder.Models;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
 
 namespace BirthdayReminder.Services
 {
