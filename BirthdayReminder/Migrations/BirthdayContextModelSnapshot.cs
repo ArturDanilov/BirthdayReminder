@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BirthdayReminder.Migrations
 {
-    [DbContext(typeof(BirthdayContext))]
+    [DbContext(typeof(DatabaseContext))]
     partial class BirthdayContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

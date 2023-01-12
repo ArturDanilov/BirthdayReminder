@@ -2,7 +2,6 @@
 
 namespace BirthdayReminder
 {
-    //TODO umbenenen
     public class PersonBuilder
     {
         List<Person> people = new List<Person>()
@@ -15,6 +14,7 @@ namespace BirthdayReminder
 
         public List<string> GetAllPersonsWithTodayBirthday()
         {
+
             var todayBirthday = people
                 .Where(x => x.BirthdayDate.Month == DateTime.Today.Month && x.BirthdayDate.Day == DateTime.Today.Day)
                 .Select(x => "Schidiger: " + x.FirstName + " " + x.LastName + "\nBirthday: " + x.BirthdayDate + "\nMail: " + x.Email)
@@ -22,6 +22,7 @@ namespace BirthdayReminder
 
             return todayBirthday;
         }
+
         public string GetAllPersonsNamesTodayBirthday()
         {
             string namesOfPerson = "";

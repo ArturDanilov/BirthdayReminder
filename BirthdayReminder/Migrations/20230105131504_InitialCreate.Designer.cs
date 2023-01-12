@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BirthdayReminder.Migrations
 {
-    [DbContext(typeof(BirthdayContext))]
+    [DbContext(typeof(DatabaseContext))]
     [Migration("20230105131504_InitialCreate")]
     partial class InitialCreate
     {

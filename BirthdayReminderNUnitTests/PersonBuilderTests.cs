@@ -1,9 +1,13 @@
 using BirthdayReminder;
+using BirthdayReminder.Database;
 using BirthdayReminder.Models;
+using BirthdayReminder.Services;
+using Microsoft.EntityFrameworkCore;
+using Moq;
 
 namespace BirthdayReminderNUnitTests
 {
-    public class Tests
+    public class PersonBuilderTests
     {
         [SetUp]
         public void Setup()
@@ -12,6 +16,20 @@ namespace BirthdayReminderNUnitTests
 
         [Test]
         public void GreeztingBilder_GreethingPersonToday_ExpectOneName()
+        {
+            // Arrange
+            PersonBuilder greethingBuilder = new PersonBuilder();
+            DateTime birthDate = DateTime.Today;
+
+            // Act
+            string actual = greethingBuilder.GetAllPersonsNamesTodayBirthday();
+
+            //Assert
+            Assert.AreEqual($"Schidiger: Ali Quattan\nBirthday: {birthDate}\nMail: ali@adesso.com", actual);
+        }
+
+        [Test]
+        public void GreeztingBilder_GreethingPerson29Februar_ExpectOneName()
         {
             // Arrange
             PersonBuilder greethingBuilder = new PersonBuilder();
@@ -55,6 +73,5 @@ namespace BirthdayReminderNUnitTests
             //Assert
             Assert.That(actual, Is.EqualTo(person.FullName));
         }
-
     }
 }
