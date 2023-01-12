@@ -2,6 +2,7 @@
 using BirthdayReminder.Models;
 using BirthdayReminder.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -15,6 +16,8 @@ namespace BirthdayReminder
     {
         private static string token { get; set; } = "5709592372:AAEo8ZYJgISbeXSXejscODAu0OIuu2ZN7UE";
         private static TelegramBotClient client;
+        private PersonService personService;
+
 
         static void Main(string[] args)
         {
@@ -35,6 +38,7 @@ namespace BirthdayReminder
                 "\n2 - Personen hinzufügen" +
                 "\n3 - DB actuialisieren" +
                 "\n4 - Telegram Bot" +
+                "\n5 - Wer ist heute geboren?" +
                 "\n0 - App schließen" +
                 "\n\nDeine Auswahl ist...");
 
@@ -56,6 +60,9 @@ namespace BirthdayReminder
                         break;
                     case "4":
                         CallTelegram();
+                        break;
+                    case "5":
+                        DisplayPeopleTodayBirthday(host);
                         break;
                     case "0":
                         Console.WriteLine("Program Ende");
@@ -86,6 +93,36 @@ namespace BirthdayReminder
                 Console.WriteLine(item.FullName.ToString() + " " + item.BirthdayDate.ToString() + " " + item.Email.ToString() + "\n");
             }
         }
+
+        private static void DisplayPeopleTodayBirthday(IHost host)
+        {
+            var result = GetAllPersons(host.Services);
+            Person _person = new Person();
+
+            foreach (var item in result)
+            {
+                if (item.BirthdayDate.Month == DateTime.Now.Month && item.BirthdayDate.Day == DateTime.Now.Day)
+                {
+                    _person = item;
+                    Console.WriteLine(item.FirstName + " " + item.LastName);
+                }
+            }
+        }
+        //public static string SendBirthdayToTelegram(IHost host)
+        //{
+        //    var result = GetAllPersons(host.Services);
+        //    string namePerson = "";
+        //    Person _person = new Person();
+
+        //    foreach (var item in result)
+        //    {
+        //        if (item.BirthdayDate.Month == DateTime.Now.Month && item.BirthdayDate.Day == DateTime.Now.Day)
+        //        {
+        //            namePerson = item.FirstName;
+        //            return namePerson;
+        //        }
+        //    }
+        //}
 
         static void CreateNewPerson(IDatabaseContext context)
         {
@@ -157,12 +194,12 @@ namespace BirthdayReminder
                             replyToMessageId: msg.MessageId,
                             replyMarkup: GetButtons());
                         break;
-                    //case "Wer ist heute geboren?":
-                    //    var heuteGeboren = await client.SendTextMessageAsync(
-                    //        chatId: msg.Chat.Id,
-                    //        text: $"Heute war {birthdayReminder.GetAllPersonsNamesTodayBirthday()}geboren",
-                    //        replyMarkup: GetButtons());
-                    //    break;
+                    case "Wer ist heute geboren?":
+                        var heuteGeboren = await client.SendTextMessageAsync(
+                            chatId: msg.Chat.Id,
+                            text: $"Heute war {DisplayPeopleTodayBirthday} geboren",
+                            replyMarkup: GetButtons());
+                        break;
                     //case "Wer ist morgen geboren?":
                     //    var morgenGeboren = await client.SendTextMessageAsync(
                     //        chatId: msg.Chat.Id,
