@@ -1,4 +1,6 @@
-﻿using BirthdayReminder.Models;
+﻿using BirthdayReminder.Database;
+using BirthdayReminder.Models;
+using Microsoft.Extensions.Hosting;
 
 namespace BirthdayReminder.Services
 {
@@ -9,5 +11,9 @@ namespace BirthdayReminder.Services
         List<Person> Find29FebruarBirthday(DateTime date);
         List<Person> FindByDate(DateTime date);
         void AddPersonFromPersonService(Person person);
+        void DisplayPeopleTodayBirthday(IHost host);
+        void CreateNewPerson(IDatabaseContext context);
+        List<Person> GetAllPersons(IServiceProvider services);
+        void ReloadDb(IDatabaseContext context);
     }
 }

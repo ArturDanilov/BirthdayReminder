@@ -20,8 +20,4 @@
     <PackageReference Include="Telegram.Bots.Extensions.Polling" Version="5.9.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Telegram\" />
-  </ItemGroup>
-
 </Project>
