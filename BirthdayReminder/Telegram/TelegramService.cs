@@ -2,11 +2,15 @@
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.ReplyMarkups;
+using BirthdayReminder.Database;
+using BirthdayReminder.Models;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 
 namespace BirthdayReminder.Telegram
 {
-    public class TelegramService
+    public class TelegramService 
     {
         private static string token { get; set; } = "5709592372:AAEo8ZYJgISbeXSXejscODAu0OIuu2ZN7UE";
         private static TelegramBotClient client;
@@ -57,19 +61,19 @@ namespace BirthdayReminder.Telegram
                     case "Wer ist heute geboren?":
                         var heuteGeboren = await client.SendTextMessageAsync(
                             chatId: msg.Chat.Id,
-                            text: $"Heute war ... geboren",
+                            text: $"Heute war ___ geboren",
                             replyMarkup: GetButtons());
                         break;
                     case "Wer ist morgen geboren?":
                         var morgenGeboren = await client.SendTextMessageAsync(
                             chatId: msg.Chat.Id,
-                            text: $"Morgen war ... geboren",
+                            text: $"Morgen war ___ geboren",
                             replyMarkup: GetButtons());
                         break;
                     case "Ein Grüß sagen":
                         var gruseSagen = await client.SendTextMessageAsync(
                             chatId: msg.Chat.Id,
-                            text: $"Ein Grüß war ... geschickt",
+                            text: $"Ein Grüß war ___ geschickt",
                             replyMarkup: GetButtons());
                         break;
                     default:

@@ -9,7 +9,7 @@ namespace BirthdayReminder.Services
         List<Person> AllPeople();
         object CreatePerson(string? firstName, string? lastName, DateTime birthday, string? email);
         List<Person> Find29FebruarBirthday(DateTime date);
-        List<Person> FindByDate(DateTime date);
+        List<Person> TodayBirthday(DateTime date);
         void AddPersonFromPersonService(Person person);
         void DisplayPeopleTodayBirthday(IHost host);
         void CreateNewPerson(IDatabaseContext context);

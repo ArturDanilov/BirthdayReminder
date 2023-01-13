@@ -25,7 +25,6 @@ namespace BirthdayReminderNUnitTests
             DbSet<Person> mydbSet = GetQueryableMockDbSet(list);
             var mockDbContext = new Mock<IDatabaseContext>();
             mockDbContext.Setup(x => x.People).Returns(mydbSet);
-
             PersonService personService = new PersonService(mockDbContext.Object); 
 
             // Act

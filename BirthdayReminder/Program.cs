@@ -36,9 +36,11 @@ namespace BirthdayReminder
             Console.WriteLine(
                 "1 - Personen zeigen" +
                 "\n2 - Personen hinzufügen" +
-                "\n3 - DB ausfühlen" +
+                "\n3 - DB neu ausfühlen" +
                 "\n4 - Telegram Bot" +
                 "\n5 - Wer ist heute geboren?" +
+                "\n6 - Wer ist morgen geboren?" +
+                "\n7 - Wollen wir jemand gratulieren?" +
                 "\n0 - App schließen" +
                 "\n\nDeine Auswahl ist...");
 
@@ -53,17 +55,37 @@ namespace BirthdayReminder
                         program.DisplayPeople(host);
                         break;
                     case "2":
-                        CreateNewPerson(databaseContext);
+                        program.CreateNewPerson(databaseContext);
                         break;
                     case "3":
-                        ReloadDb(databaseContext);
+                        program.ReloadDb(databaseContext);
                         break;
                     case "4":
                         TelegramService telegramService = new TelegramService();
                         telegramService.CallTelegramBot();
                         break;
                     case "5":
-                        DisplayPeopleTodayBirthday(host);
+                        program.DisplayPeopleTodayBirthday(host);
+                        break;
+                    case "6":
+                        program.DisplayPeopleTomorowBirthday(host);
+                        break;
+                    case "7":
+                        Console.WriteLine("\nWollen wir mit hilfe chat.openai jemand gratulieren?");
+                        string antwort = Console.ReadLine();
+                        switch (antwort)
+                        {
+                            case "y":
+                                System.Threading.Thread.Sleep(1000);
+                                Console.WriteLine("You can use chat.openai");
+                                program.ChatOpenai();
+                                break;
+                            case "n":
+                                Console.WriteLine("Service kapput");
+                                break;
+                            default:
+                                break;
+                        }
                         break;
                     case "0":
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -77,6 +99,12 @@ namespace BirthdayReminder
             } while (selectedAction != "0");
         }
 
+
+        private void ChatOpenai()
+        {
+            Console.WriteLine("chatopenai started...");
+        }
+
         private void DisplayPeople(IHost host)
         {
             var result = GetAllPersons(host.Services);
@@ -84,7 +112,7 @@ namespace BirthdayReminder
                 Console.WriteLine(item.FullName.ToString() + " " + item.BirthdayDate.ToString() + " " + item.Email.ToString() + "\n");
         }
 
-        private static void DisplayPeopleTodayBirthday(IHost host)
+        private void DisplayPeopleTodayBirthday(IHost host)
         {
             var result = GetAllPersons(host.Services);
             Person _person = new Person();
@@ -98,50 +126,46 @@ namespace BirthdayReminder
                 }
             }
         }
-
-        //public static string SendBirthdayToTelegram(IHost host)
-        //{
-        //    var result = GetAllPersons(host.Services);
-        //    string namePerson = "";
-        //    Person _person = new Person();
-
-        //    foreach (var item in result)
-        //    {
-        //        if (item.BirthdayDate.Month == DateTime.Now.Month && item.BirthdayDate.Day == DateTime.Now.Day)
-        //        {
-        //            namePerson = item.FirstName;
-        //            return namePerson;
-        //        }
-        //    }
-        //}
-
-        static void CreateNewPerson(IDatabaseContext context)
+        private void DisplayPeopleTomorowBirthday(IHost host)
         {
-            Person person= new Person();
+            var result = GetAllPersons(host.Services);
+            Person _person = new Person();
 
-            Console.WriteLine("Firstname - ");
+            foreach (var item in result)
+            {
+                if (item.BirthdayDate.Month == DateTime.Now.Month && item.BirthdayDate.Day == DateTime.Now.Day && item.BirthdayDate.Month == 2 && item.BirthdayDate.Day == 29)
+                {
+                    _person = item;
+                    Console.WriteLine(item.FirstName + " " + item.LastName + " soll  gratuliert werden");
+                }
+            }
+        }
+
+        void CreateNewPerson(IDatabaseContext context)
+        {            
+            Console.WriteLine("Enter firstname...");
             var firstName = Console.ReadLine();
-
-            Console.WriteLine("Lastname - ");
-            var lastName = Console.ReadLine();
             
-            Console.WriteLine("Birthdate (YYYY-MM-DD) - ");
-            DateTime birthdate = Convert.ToDateTime(Console.ReadLine());
+            Console.WriteLine("Enter lastname...");
+            var lastName = Console.ReadLine();            
             
-            Console.WriteLine("email - ");
+            Console.WriteLine("Enter birthdate (YYYY-MM-DD)...");
+            DateTime birthdate = Convert.ToDateTime(Console.ReadLine());            
+            
+            Console.WriteLine("Enter email...");
             var email = Console.ReadLine();
 
             context.AddPersonFromContext(new Person(firstName, lastName, birthdate, email));
             context.SaveChanges();
         }
 
-        static List<Person> GetAllPersons(IServiceProvider services)
+        List<Person> GetAllPersons(IServiceProvider services)
         {
             IPersonService personService = services.GetRequiredService<IPersonService>(); // new PersonService(new DatabaseContext());
             return personService.AllPeople();
         }
 
-        static void ReloadDb(IDatabaseContext context)
+        void ReloadDb(IDatabaseContext context)
         {
                 context.AddPersonFromContext(new Person("Geber","Ann",  new DateTime(1970, 11, 01), "ali@adesso.com"));
                 context.AddPersonFromContext(new Person("Zug","Ann",  new DateTime(1980, 01, 01), "sven@adesso.com"));
