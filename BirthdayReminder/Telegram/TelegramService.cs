@@ -1,16 +1,11 @@
-﻿using BirthdayReminder.Services;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.ReplyMarkups;
-using BirthdayReminder.Database;
-using BirthdayReminder.Models;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 
 namespace BirthdayReminder.Telegram
 {
-    public class TelegramService 
+    public class TelegramService : ITelegramService
     {
         private static string token { get; set; } = "5709592372:AAEo8ZYJgISbeXSXejscODAu0OIuu2ZN7UE";
         private static TelegramBotClient client;
@@ -26,6 +21,8 @@ namespace BirthdayReminder.Telegram
             client.OnMessage += telegramService.OnMessageHandler;
             Console.ReadLine();
             client.StopReceiving();
+
+
         }
         private async void OnMessageHandler(object sender, MessageEventArgs e)
         {

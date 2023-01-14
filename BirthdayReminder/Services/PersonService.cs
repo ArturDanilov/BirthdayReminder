@@ -13,12 +13,18 @@ namespace BirthdayReminder.Services
             this._context = context;
         }
 
-        public List<Person> AllPeople() => _context.People.ToList();
+        public List<Person> AllPeople() => _context.People
+            .ToList();
 
-        public List<Person> TodayBirthday(DateTime date) => _context.People.Where(x => x.BirthdayDate == date).ToList();
+        public List<Person> TodayBirthday(DateTime date) => _context.People
+            .Where(x => x.BirthdayDate == date).ToList();
 
-        public List<Person> Find29FebruarBirthday(DateTime date) => _context.People.Where(x => x.BirthdayDate.Month == 02 && x.BirthdayDate.Day == 29).ToList();
-        public void AddPersonFromPersonService(Person person) => _context.AddPersonFromContext(person);
+        public List<Person> Find29FebruarBirthday(DateTime date) => _context.People
+            .Where(x => x.BirthdayDate.Month == 02 && x.BirthdayDate.Day == 29)
+            .ToList();
+        
+        public void AddPersonFromPersonService(Person person) => _context
+            .AddPersonFromContext(person);
 
         public object CreatePerson(string? firstName, string? lastName, DateTime birthday, string? email)
         {

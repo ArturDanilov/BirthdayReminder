@@ -11,7 +11,7 @@ namespace BirthdayReminder.Models
         public string LastName { get; set; }
         public DateTime BirthdayDate { get; set; }
         public string Email { get; set; }
-        public string FullName => $"{FirstName} {LastName}"; //!TODO testen
+        public string FullName => $"{LastName} {FirstName}"; //!TODO testen
 
         public Person( string firstName,string lastName, DateTime birthdayDate, string email) //!TODO first und dann last
         {
