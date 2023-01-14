@@ -12,7 +12,7 @@ namespace BirthdayReminder
     {
         static void Main(string[] args)
         {
-            //wofür des ist da?
+            //?
             using IHost host = Host.CreateDefaultBuilder(args)
                 .ConfigureServices(services =>
                 {
@@ -23,7 +23,7 @@ namespace BirthdayReminder
                 })
                 .Build();
 
-            IDatabaseContext databaseContext = host.Services.GetRequiredService<IDatabaseContext>();
+            IDatabaseContext databaseContext = host.Services.GetRequiredService<IDatabaseContext>(); //?
 
             ConsoleUI consoleUI = new ConsoleUI();
             consoleUI.ConsoleStart(host, databaseContext);

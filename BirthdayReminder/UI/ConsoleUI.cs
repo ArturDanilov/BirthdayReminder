@@ -9,7 +9,6 @@ namespace BirthdayReminder.UI
 {
     public class ConsoleUI
     {
-        //ConsoleUI
         public void ConsoleStart(IHost host, IDatabaseContext databaseContext)
         {
             Program program = new Program();
@@ -34,7 +33,7 @@ namespace BirthdayReminder.UI
                 switch (selectedAction)
                 {
                     case "1":
-                        DisplayPeople(host);
+                        DisplayAllPeople(host);
                         break;
                     case "2":
                         CreateNewPerson(databaseContext);
@@ -54,7 +53,7 @@ namespace BirthdayReminder.UI
                         break;
                     case "7":
                         Console.WriteLine("\nWollen wir mit hilfe chat.openai jemand gratulieren?");
-                        string antwort = Console.ReadLine();
+                        var antwort = Console.ReadLine();
                         switch (antwort)
                         {
                             case "y":
@@ -80,17 +79,23 @@ namespace BirthdayReminder.UI
 
             } while (selectedAction != "0");
         }
+        List<Person> GetAllPersons(IServiceProvider services)
+        {
+            IPersonService personService = services.GetRequiredService<IPersonService>(); // new PersonService(new DatabaseContext());
+            return personService.AllPeople();
+        }
 
+        //TODO
         private void ChatOpenai()
         {
             Console.WriteLine("chatopenai started...");
         }
 
-        private void DisplayPeople(IHost host)
+        private void DisplayAllPeople(IHost host)
         {
             var result = GetAllPersons(host.Services);
             foreach (var item in result)
-                Console.WriteLine(item.FullName.ToString() + " " + item.BirthdayDate.ToString() + " " + item.Email.ToString() + "\n");
+                Console.WriteLine(item.FullName.ToString() + " | " + item.BirthdayDate.ToString() + " | " + item.Email.ToString() + "\n");
         }
 
         private void DisplayPeopleTodayBirthday(IHost host)
@@ -140,11 +145,6 @@ namespace BirthdayReminder.UI
             context.SaveChanges();
         }
 
-        List<Person> GetAllPersons(IServiceProvider services)
-        {
-            IPersonService personService = services.GetRequiredService<IPersonService>(); // new PersonService(new DatabaseContext());
-            return personService.AllPeople();
-        }
 
         void ReloadDb(IDatabaseContext context)
         {

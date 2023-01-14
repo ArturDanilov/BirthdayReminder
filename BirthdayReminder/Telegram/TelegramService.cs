@@ -1,4 +1,9 @@
-﻿using Telegram.Bot;
+﻿using BirthdayReminder.Database;
+using BirthdayReminder.Models;
+using BirthdayReminder.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.ReplyMarkups;
 
@@ -9,6 +14,7 @@ namespace BirthdayReminder.Telegram
     {
         private static string token { get; set; } = "5709592372:AAEo8ZYJgISbeXSXejscODAu0OIuu2ZN7UE";
         private static TelegramBotClient client;
+        
         public void CallTelegramBot()
         {
             Console.WriteLine("Start TelegramBot...\n");
@@ -58,13 +64,13 @@ namespace BirthdayReminder.Telegram
                     case "Wer ist heute geboren?":
                         var heuteGeboren = await client.SendTextMessageAsync(
                             chatId: msg.Chat.Id,
-                            text: $"Heute war ___ geboren",
+                            text: $"Heute war {_person} geboren",
                             replyMarkup: GetButtons());
                         break;
                     case "Wer ist morgen geboren?":
                         var morgenGeboren = await client.SendTextMessageAsync(
                             chatId: msg.Chat.Id,
-                            text: $"Morgen war ___ geboren",
+                            text: $"Morgen war {_person} geboren",
                             replyMarkup: GetButtons());
                         break;
                     case "Ein Grüß sagen":
@@ -78,6 +84,28 @@ namespace BirthdayReminder.Telegram
                         break;
                 }
             }
+        }
+
+        List<Person> GetAllPersons(IServiceProvider services)
+        {
+            IPersonService personService = services.GetRequiredService<IPersonService>();
+            return personService.AllPeople();
+        }
+        
+        string _person = "niemand";
+        private string DisplayPeopleTodayBirthday(IHost host)
+        {
+            var result = GetAllPersons(host.Services);
+            //Person _person = new Person();
+
+            foreach (var item in result)
+            {
+                if (item.BirthdayDate.Month == DateTime.Now.Month && item.BirthdayDate.Day == DateTime.Now.Day)
+                {
+                    _person = item.FullName;
+                }
+            }
+            return _person;
         }
 
         private IReplyMarkup GetButtons()

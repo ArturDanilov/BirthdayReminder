@@ -21,7 +21,9 @@ namespace BirthdayReminder.Models
             Email = email;
             Id = Guid.NewGuid();
         }
-        public Person() {} 
+        public Person() 
+        {
+        } 
 
     }
 }

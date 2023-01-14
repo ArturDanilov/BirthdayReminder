@@ -17,7 +17,8 @@ namespace BirthdayReminder.Services
             .ToList();
 
         public List<Person> TodayBirthday(DateTime date) => _context.People
-            .Where(x => x.BirthdayDate == date).ToList();
+            .Where(x => x.BirthdayDate == date)
+            .ToList();
 
         public List<Person> Find29FebruarBirthday(DateTime date) => _context.People
             .Where(x => x.BirthdayDate.Month == 02 && x.BirthdayDate.Day == 29)
