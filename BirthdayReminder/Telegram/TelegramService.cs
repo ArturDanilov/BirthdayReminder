@@ -92,6 +92,9 @@ namespace BirthdayReminder.Telegram
             return personService.AllPeople();
         }
         
+        /// <summary>
+        /// TODO: ...
+        /// </summary>
         string _person = "niemand";
         private string DisplayPeopleTodayBirthday(IHost host)
         {

@@ -105,7 +105,7 @@ namespace BirthdayReminder.UI
                     && item.BirthdayDate.Day == DateTime.Now.Day)
                 {
                     //_person = item;
-                    Console.WriteLine(item.FirstName + " " + item.LastName);
+                    Console.WriteLine(item.FirstName + " " + item.LastName + " wurde an diesem schönen Tag geboren");
                 }
             }
         }
@@ -122,12 +122,14 @@ namespace BirthdayReminder.UI
                     && item.BirthdayDate.Day == 29)
                 {
                     //_person = item;
-                    Console.WriteLine(item.FirstName + " " + item.LastName + " soll heute gratuliert werden");
+                    Console.WriteLine(" Sie können " 
+                        + item.FirstName + " " + item.LastName 
+                        + " nur ein mal pro vier Jahre gratulieren, aber wenn Sie es wirklich wollen, können Sie es heute tun.");
                 }
                 if (item.BirthdayDate.Month == DateTime.Now.Month && item.BirthdayDate.Day == DateTime.Now.Day + 1)
                 {
                     //_person = item;
-                    Console.WriteLine(item.FirstName + " " + item.LastName + " soll  gratuliert werden");
+                    Console.WriteLine(item.FirstName + " " + item.LastName + "  hätte an diesem schönen Tag geboren werden können, wurde aber morgen geboren");
                 }
             }
         }
