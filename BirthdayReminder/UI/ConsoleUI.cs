@@ -91,7 +91,7 @@ namespace BirthdayReminder.UI
         {
             var result = GetAllPersons(host.Services);
             foreach (var item in result)
-                Console.WriteLine(item.FullName.ToString() + " | " + item.BirthdayDate.Date.ToString() + " | " + item.Email.ToString() + "\n");
+                Console.WriteLine(item.FullName.ToString() + " | " + item.BirthdayDate.Date.ToString("dd/MM/yyyy") + " | " + item.Email.ToString() + "\n");
         }
 
         private void DisplayPeopleTodayBirthday(IHost host)
