@@ -11,11 +11,11 @@ namespace BirthdayReminder.UI
     {
         public void ConsoleStart(IHost host, IDatabaseContext databaseContext)
         {
-            Program program = new Program();
-            string selectedAction = "";
+            var program = new Program();        
+
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(
-                "1 - Personen zeigen" +
+                "1 - Personen anzeigen" +
                 "\n2 - Personen hinzufügen" +
                 "\n3 - DB neu ausfühlen" +
                 "\n4 - Telegram Bot" +
@@ -25,6 +25,7 @@ namespace BirthdayReminder.UI
                 "\n0 - App schließen" +
                 "\n\nDeine Auswahl ist...");
 
+            var selectedAction = "";
             do
             {
                 selectedAction = Console.ReadLine();
@@ -42,23 +43,25 @@ namespace BirthdayReminder.UI
                         ReloadDb(databaseContext);
                         break;
                     case "4":
-                        TelegramService telegramService = new TelegramService();
+                        var telegramService = new TelegramService();
                         telegramService.CallTelegramBot();
                         break;
                     case "5":
+                        CreatePersonBirthdayToday(databaseContext); //TODO: tempo.daten
                         DisplayPeopleTodayBirthday(host);
                         break;
                     case "6":
+                        CreatePersonBirthdayTomorow(databaseContext); //TODO: tempo.daten
                         DisplayPeopleTomorowBirthday(host);
                         break;
                     case "7":
-                        Console.WriteLine("\nWollen wir mit hilfe chat.openai jemand gratulieren?");
+                        Console.WriteLine("\nWollen wir mit Hilfe chat.openai um jemandem zu gratulieren?");
                         var antwort = Console.ReadLine();
                         switch (antwort)
                         {
                             case "y":
                                 System.Threading.Thread.Sleep(1000);
-                                Console.WriteLine("You can use chat.openai");
+                                Console.WriteLine("Du kannst chat.openai nutzen");
                                 ChatOpenai();
                                 break;
                             case "n":
@@ -73,22 +76,17 @@ namespace BirthdayReminder.UI
                         Console.WriteLine("Program Ende");
                         break;
                     default:
-                        Console.WriteLine("Hit enter und try again or hit 0 to close!");
+                        Console.WriteLine("Drücken Sie die Eingabetaste und versuchen Sie es erneut oder drücken Sie 0 zum Schließen!");
                         break;
                 }
 
             } while (selectedAction != "0");
         }
+        //????
         List<Person> GetAllPersons(IServiceProvider services)
         {
             IPersonService personService = services.GetRequiredService<IPersonService>(); // new PersonService(new DatabaseContext());
             return personService.AllPeople();
-        }
-
-        //TODO
-        private void ChatOpenai()
-        {
-            Console.WriteLine("chatopenai started...");
         }
 
         private void DisplayAllPeople(IHost host)
@@ -101,13 +99,14 @@ namespace BirthdayReminder.UI
         private void DisplayPeopleTodayBirthday(IHost host)
         {
             var result = GetAllPersons(host.Services);
-            Person _person = new Person();
+            //var _person = new Person();
 
             foreach (var item in result)
             {
-                if (item.BirthdayDate.Month == DateTime.Now.Month && item.BirthdayDate.Day == DateTime.Now.Day)
+                if (item.BirthdayDate.Month == DateTime.Now.Month 
+                    && item.BirthdayDate.Day == DateTime.Now.Day)
                 {
-                    _person = item;
+                    //_person = item;
                     Console.WriteLine(item.FirstName + " " + item.LastName);
                 }
             }
@@ -115,13 +114,21 @@ namespace BirthdayReminder.UI
         private void DisplayPeopleTomorowBirthday(IHost host)
         {
             var result = GetAllPersons(host.Services);
-            Person _person = new Person();
+            //var _person = new Person();
 
             foreach (var item in result)
             {
-                if (item.BirthdayDate.Month == DateTime.Now.Month && item.BirthdayDate.Day == DateTime.Now.Day && item.BirthdayDate.Month == 2 && item.BirthdayDate.Day == 29)
+                if (item.BirthdayDate.Month == DateTime.Now.Month 
+                    && item.BirthdayDate.Day == DateTime.Now.Day 
+                    && item.BirthdayDate.Month == 2 
+                    && item.BirthdayDate.Day == 29)
                 {
-                    _person = item;
+                    //_person = item;
+                    Console.WriteLine(item.FirstName + " " + item.LastName + " soll heute gratuliert werden");
+                }
+                if (item.BirthdayDate.Month == DateTime.Now.Month && item.BirthdayDate.Day == DateTime.Now.Day + 1)
+                {
+                    //_person = item;
                     Console.WriteLine(item.FirstName + " " + item.LastName + " soll  gratuliert werden");
                 }
             }
@@ -145,6 +152,18 @@ namespace BirthdayReminder.UI
             context.SaveChanges();
         }
 
+        void CreatePersonBirthdayToday(IDatabaseContext context)
+        {
+            context.AddPersonFromContext(new Person("Todaev", "Birthdman", DateTime.Now, "testEmail"));
+            context.SaveChanges();
+        }
+
+        void CreatePersonBirthdayTomorow(IDatabaseContext context)
+        {
+            context.AddPersonFromContext(new Person("Tomorowich", "Birthdman", DateTime.Now.AddDays(+1), "testEmail"));
+            context.SaveChanges();
+        }
+
 
         void ReloadDb(IDatabaseContext context)
         {
@@ -158,6 +177,12 @@ namespace BirthdayReminder.UI
             context.AddPersonFromContext(new Person("Huana", "Mary", new DateTime(2023, 01, 04), "bot4@adesso.com"));
 
             context.SaveChanges();
+        }
+
+        //TODO
+        private void ChatOpenai()
+        {
+            Console.WriteLine("chatopenai started...");
         }
     }
 }

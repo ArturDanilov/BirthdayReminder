@@ -10,7 +10,7 @@ namespace BirthdayReminder.Services
         private readonly IDatabaseContext _context;
         public PersonService(IDatabaseContext context)
         {
-            this._context = context;
+            _context = context;
         }
 
         public List<Person> AllPeople() => _context.People
