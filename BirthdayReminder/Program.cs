@@ -25,7 +25,7 @@ namespace BirthdayReminder
 
             IDatabaseContext databaseContext = host.Services.GetRequiredService<IDatabaseContext>(); //?
 
-            ConsoleUI consoleUI = new ConsoleUI();
+            var consoleUI = new ConsoleUI();
             consoleUI.ConsoleStart(host, databaseContext);
         }
     }

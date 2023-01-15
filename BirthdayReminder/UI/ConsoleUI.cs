@@ -11,8 +11,6 @@ namespace BirthdayReminder.UI
     {
         public void ConsoleStart(IHost host, IDatabaseContext databaseContext)
         {
-            var program = new Program();        
-
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(
                 "1 - Personen anzeigen" +
@@ -82,10 +80,10 @@ namespace BirthdayReminder.UI
 
             } while (selectedAction != "0");
         }
-        //????
-        List<Person> GetAllPersons(IServiceProvider services)
+        
+        List<Person> GetAllPersons(IServiceProvider services)//????
         {
-            IPersonService personService = services.GetRequiredService<IPersonService>(); // new PersonService(new DatabaseContext());
+            IPersonService personService = services.GetRequiredService<IPersonService>();// new PersonService(new DatabaseContext());
             return personService.AllPeople();
         }
 
@@ -93,7 +91,7 @@ namespace BirthdayReminder.UI
         {
             var result = GetAllPersons(host.Services);
             foreach (var item in result)
-                Console.WriteLine(item.FullName.ToString() + " | " + item.BirthdayDate.ToString() + " | " + item.Email.ToString() + "\n");
+                Console.WriteLine(item.FullName.ToString() + " | " + item.BirthdayDate.Date.ToString() + " | " + item.Email.ToString() + "\n");
         }
 
         private void DisplayPeopleTodayBirthday(IHost host)
@@ -148,33 +146,33 @@ namespace BirthdayReminder.UI
             Console.WriteLine("Enter email...");
             var email = Console.ReadLine();
 
-            context.AddPersonFromContext(new Person(firstName, lastName, birthdate, email));
+            context.AddPersonFromContext(new Person(firstName, lastName, birthdate.Date, email));
             context.SaveChanges();
         }
 
         void CreatePersonBirthdayToday(IDatabaseContext context)
         {
-            context.AddPersonFromContext(new Person("Todaev", "Birthdman", DateTime.Now, "testEmail"));
+            context.AddPersonFromContext(new Person("Todaev", "Birthdman", DateTime.Now.Date, "testEmail"));
             context.SaveChanges();
         }
 
         void CreatePersonBirthdayTomorow(IDatabaseContext context)
         {
-            context.AddPersonFromContext(new Person("Tomorowich", "Birthdman", DateTime.Now.AddDays(+1), "testEmail"));
+            context.AddPersonFromContext(new Person("Tomorowich", "Birthdman", DateTime.Now.Date.AddDays(+1), "testEmail"));
             context.SaveChanges();
         }
 
 
         void ReloadDb(IDatabaseContext context)
         {
-            context.AddPersonFromContext(new Person("Geber", "Ann", new DateTime(1970, 11, 01), "ali@adesso.com"));
-            context.AddPersonFromContext(new Person("Zug", "Ann", new DateTime(1980, 01, 01), "sven@adesso.com"));
-            context.AddPersonFromContext(new Person("Lise", "Anna", new DateTime(1990, 01, 01), "markus@adesso.com"));
-            context.AddPersonFromContext(new Person("Nass", "Anna", new DateTime(1960, 01, 01), "artur@adesso.com"));
-            context.AddPersonFromContext(new Person("Conda", "Anna", new DateTime(2023, 01, 01), "anna@adesso.com"));
-            context.AddPersonFromContext(new Person("Müll", "Reiner", new DateTime(2023, 01, 02), "benz@adesso.com"));
-            context.AddPersonFromContext(new Person("Bier", "Wilma", new DateTime(2023, 01, 03), "wilmaBier@adesso.com"));
-            context.AddPersonFromContext(new Person("Huana", "Mary", new DateTime(2023, 01, 04), "bot4@adesso.com"));
+            context.AddPersonFromContext(new Person("Geber", "Ann", new DateTime(1970, 11, 01).Date, "ali@adesso.com"));
+            context.AddPersonFromContext(new Person("Zug", "Ann", new DateTime(1980, 01, 01).Date, "sven@adesso.com"));
+            context.AddPersonFromContext(new Person("Lise", "Anna", new DateTime(1990, 01, 01).Date, "markus@adesso.com"));
+            context.AddPersonFromContext(new Person("Nass", "Anna", new DateTime(1960, 01, 01).Date, "artur@adesso.com"));
+            context.AddPersonFromContext(new Person("Conda", "Anna", new DateTime(2023, 01, 01).Date, "anna@adesso.com"));
+            context.AddPersonFromContext(new Person("Müll", "Reiner", new DateTime(2023, 01, 02).Date, "benz@adesso.com"));
+            context.AddPersonFromContext(new Person("Bier", "Wilma", new DateTime(2023, 01, 03).Date, "wilmaBier@adesso.com"));
+            context.AddPersonFromContext(new Person("Huana", "Mary", new DateTime(2023, 01, 04).Date, "bot4@adesso.com"));
 
             context.SaveChanges();
         }

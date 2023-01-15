@@ -32,7 +32,7 @@ namespace BirthdayReminder.Services
             Person output = new Person();
             output.FirstName = firstName;
             output.LastName = lastName;
-            output.BirthdayDate = birthday;
+            output.BirthdayDate = birthday.Date;
             output.Email = email;
 
             return output;
@@ -42,19 +42,18 @@ namespace BirthdayReminder.Services
         {
             var result = GetAllPersons(host.Services);
             foreach (var item in result)
-                Console.WriteLine(item.FullName.ToString() + " " + item.BirthdayDate.ToString() + " " + item.Email.ToString() + "\n");
+                Console.WriteLine(item.FullName.ToString() + " " + item.BirthdayDate.Date.ToString() + " " + item.Email.ToString() + "\n");
         }
 
         public void DisplayPeopleTodayBirthday(IHost host)
         {
             var result = GetAllPersons(host.Services);
-            Person _person = new Person();
 
             foreach (var item in result)
             {
                 if (item.BirthdayDate.Month == DateTime.Now.Month && item.BirthdayDate.Day == DateTime.Now.Day)
                 {
-                    _person = item;
+                    var _person = item;
                     Console.WriteLine(item.FirstName + " " + item.LastName);
                 }
             }

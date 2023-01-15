@@ -42,7 +42,6 @@ namespace BirthdayReminderNUnitTests
 
             Person newPerson = new Person();
             mockDbContext.Setup(x => x.AddPersonFromContext(newPerson));
-
             PersonService personService = new PersonService(mockDbContext.Object); //new PersonService(databasecontext)
 
             // Act
