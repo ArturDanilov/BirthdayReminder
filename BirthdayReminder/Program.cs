@@ -12,13 +12,22 @@ namespace BirthdayReminder
     {
         static void Main(string[] args)
         {
+            //var servicesNoHost = new ServiceCollection()
+            //    .AddSingleton<IDatabaseContext>(providerNoHost => providerNoHost.GetService<DatabaseContext>())
+            //    .AddSingleton<ITelegramService, TelegramService>()
+            //    .AddSingleton<IPersonService, PersonService>()
+            //    .BuildServiceProvider() ;
+
+            //var dbContext = servicesNoHost.GetRequiredService<IDatabaseContext>();
+
             //Зависимость регистрируется в контейнере служб
             //A host is an object that encapsulates an app's resources, such as:
             //- Dependency injection(DI)
             //- Logging
             //- Configuration
             //- IHostedService implementations
-            
+
+
             using IHost host = Host
             .CreateDefaultBuilder(args)
             .ConfigureServices(services =>
@@ -34,6 +43,7 @@ namespace BirthdayReminder
 
             var consoleUI = new ConsoleUI();
             consoleUI.ConsoleStart(host, databaseContext);
+            //consoleUI.ConsoleStart(servicesNoHost, dbContext);
         }
     }
 }

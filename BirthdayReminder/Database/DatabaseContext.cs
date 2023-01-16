@@ -16,7 +16,6 @@ namespace BirthdayReminder.Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlite($"Data Source={DatabasePath}");
         public void AddPersonFromContext(Person person) => People.Add(person);          
-        public int SaveChanges() => base.SaveChanges();
-        
+        public int SaveChanges() => base.SaveChanges();        
     }
 }

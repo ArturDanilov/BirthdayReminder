@@ -33,13 +33,42 @@ namespace BirthdayReminder.Services
                 }
             }
         }
-
         public List<Person> GetAllPersons(IServiceProvider services)//????
         {
             IPersonService personService = services
                 .GetRequiredService<IPersonService>();// new PersonService(new DatabaseContext());
             return personService.AllPeople();
         }
+
+
+        
+        //public void DisplayPeopleTodayBirthdayNoHost()
+        //{
+        //    var result = GetAllPersonsNoHost();
+        //    //var _person = new Person();
+
+        //    foreach (var item in result)
+        //    {
+        //        if (item.BirthdayDate.Month == DateTime.Now.Month
+        //            && item.BirthdayDate.Day == DateTime.Now.Day)
+        //        {
+        //            //_person = item;
+        //            Console.WriteLine(item.FirstName 
+        //                + " " + item.LastName 
+        //                + " wurde an diesem schönen Tag geboren");
+        //        }
+        //    }
+        //}
+        //public List<Person> GetAllPersonsNoHost(IServiceProvider servicesNoHost)//????
+        //{
+        //    IPersonService personService = servicesNoHost
+        //        .GetRequiredService<IPersonService>();// new PersonService(new DatabaseContext());
+        //    return personService.AllPeople();
+        //}
+
+
+
+
 
         public void DisplayAllPeople(IHost host)
         {
