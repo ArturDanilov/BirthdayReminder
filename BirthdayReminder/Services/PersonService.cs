@@ -16,6 +16,23 @@ namespace BirthdayReminder.Services
         public List<Person> AllPeople() => _context.People
             .ToList();
 
+        public void DisplayPeopleTodayBirthday(IHost host)
+        {
+            var result = GetAllPersons(host.Services);
+            //var _person = new Person();
+
+            foreach (var item in result)
+            {
+                if (item.BirthdayDate.Month == DateTime.Now.Month
+                    && item.BirthdayDate.Day == DateTime.Now.Day)
+                {
+                    //_person = item;
+                    Console.WriteLine(item.FirstName 
+                        + " " + item.LastName 
+                        + " wurde an diesem schönen Tag geboren");
+                }
+            }
+        }
 
         public List<Person> GetAllPersons(IServiceProvider services)//????
         {
@@ -35,23 +52,6 @@ namespace BirthdayReminder.Services
         }
 
 
-        public void DisplayPeopleTodayBirthday(IHost host)
-        {
-            var result = GetAllPersons(host.Services);
-            //var _person = new Person();
-
-            foreach (var item in result)
-            {
-                if (item.BirthdayDate.Month == DateTime.Now.Month
-                    && item.BirthdayDate.Day == DateTime.Now.Day)
-                {
-                    //_person = item;
-                    Console.WriteLine(item.FirstName 
-                        + " " + item.LastName 
-                        + " wurde an diesem schönen Tag geboren");
-                }
-            }
-        }
 
         public void DisplayPeopleTomorowBirthday(IHost host)
         {
@@ -159,16 +159,6 @@ namespace BirthdayReminder.Services
             output.Email = email;
 
             return output;
-        }
-
-        public void DisplayPeople(IHost host)
-        {
-            var result = GetAllPersons(host.Services);
-            foreach (var item in result)
-                Console.WriteLine(item.FullName.ToString() 
-                    + " " + item.BirthdayDate.Date.ToString() 
-                    + " " + item.Email.ToString() 
-                    + "\n");
         }
     }
 }

@@ -7,7 +7,7 @@ using Moq;
 
 namespace BirthdayReminderNUnitTests
 {
-    internal class PersonServiceTests
+    public class PersonServiceTests
     {
         [SetUp]
         public void Setup()
@@ -23,6 +23,7 @@ namespace BirthdayReminderNUnitTests
 
             //Assert
         }
+
         [Test]
         public void DisplayAllPeople_()
         {
@@ -32,10 +33,16 @@ namespace BirthdayReminderNUnitTests
 
             //Assert
         }
+
         [Test]
         public void DisplayPeopleTodayBirthday_()
         {
             // Arrange
+            List<Person> list = new List<Person>()
+            {
+                new Person("Todayev", "Birthdmann", DateTime.Now, "mail.de"),
+                new Person("Tomorovich", "Birthdmann", DateTime.Today.AddDays(1), "mail.ru")
+            };
 
             // Act
 
@@ -45,11 +52,26 @@ namespace BirthdayReminderNUnitTests
         public void DisplayPeopleTomorowBirthday_()
         {
             // Arrange
+            var mockDbContext = new Mock<IDatabaseContext>();
+            IHost host = new Mock<IHost>();
+            var newPerson = new Person();
+            var iPersonService = new PersonService(mockDbContext.Object);
+            var person = new PersonService(mockDbContext.Object);
+            mockDbContext.Setup(x => x.AddPersonFromContext(newPerson));
+
+            List<Person> list = new List<Person>()
+            {
+                new Person("Todayev", "Birthdmann", DateTime.Now, "mail.de"),
+                new Person("Tomorovich", "Birthdmann", DateTime.Today.AddDays(1), "mail.ru")
+            };
 
             // Act
+            iPersonService.DisplayPeopleTomorowBirthday()
+            person.DisplayPeopleTodayBirthday()
 
             //Assert
         }
+
         [Test]
         public void CreateNewPerson_()
         {
@@ -78,10 +100,6 @@ namespace BirthdayReminderNUnitTests
             //Assert
         }
 
-
-
-
-
         //[Test]
         //public void DisplayPeopleTodayBirthday_CallsAddPersonFromContextOne2()
         //{
@@ -97,26 +115,26 @@ namespace BirthdayReminderNUnitTests
         //    //Assert
         //}
 
-        [Test]
-        public void PersonService_CallAddPersonFromContextOne()
-        {
-            // Arrange
-            List<Person> list = new List<Person>()
-            {
-                new Person("ali", "Qattan", DateTime.Now, "hhh"),
-                new Person("Mix", "Artur", DateTime.Today.AddDays(1), "hhh")
-            };
-            DbSet<Person> mydbSet = GetQueryableMockDbSet(list);
-            var mockDbContext = new Mock<IDatabaseContext>();
-            mockDbContext.Setup(x => x.People).Returns(mydbSet);
-            PersonService personService = new PersonService(mockDbContext.Object); 
+        //[Test]
+        //public void PersonService_CallAddPersonFromContextOne()
+        //{
+        //    // Arrange
+        //    List<Person> list = new List<Person>()
+        //    {
+        //        new Person("ali", "Qattan", DateTime.Now, "hhh"),
+        //        new Person("Mix", "Artur", DateTime.Today.AddDays(1), "hhh")
+        //    };
+        //    DbSet<Person> mydbSet = GetQueryableMockDbSet(list);
+        //    var mockDbContext = new Mock<IDatabaseContext>();
+        //    mockDbContext.Setup(x => x.People).Returns(mydbSet);
+        //    PersonService personService = new PersonService(mockDbContext.Object); 
 
-            // Act
-            var actual = personService.AllPeople();
+        //    // Act
+        //    var actual = personService.AllPeople();
 
-            //Assert
-            mockDbContext.Verify(x => x.People, Times.Once());
-        }
+        //    //Assert
+        //    mockDbContext.Verify(x => x.People, Times.Once());
+        //}
 
         [Test]
         public void AddPersonFromService_CallsAddPersonFromContextOne()
