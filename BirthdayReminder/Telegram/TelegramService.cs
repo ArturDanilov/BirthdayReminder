@@ -64,13 +64,13 @@ namespace BirthdayReminder.Telegram
                     case "Wer ist heute geboren?":
                         var heuteGeboren = await client.SendTextMessageAsync(
                             chatId: msg.Chat.Id,
-                            text: $"Heute war {_person} geboren",
+                            text: $"Heute war ... geboren",
                             replyMarkup: GetButtons());
                         break;
                     case "Wer ist morgen geboren?":
                         var morgenGeboren = await client.SendTextMessageAsync(
                             chatId: msg.Chat.Id,
-                            text: $"Morgen war {_person} geboren",
+                            text: $"Heute war ... geboren",
                             replyMarkup: GetButtons());
                         break;
                     case "Ein Grüß sagen":
@@ -84,31 +84,6 @@ namespace BirthdayReminder.Telegram
                         break;
                 }
             }
-        }
-
-        List<Person> GetAllPersons(IServiceProvider services)
-        {
-            IPersonService personService = services.GetRequiredService<IPersonService>();
-            return personService.AllPeople();
-        }
-        
-        /// <summary>
-        /// TODO: ...
-        /// </summary>
-        string _person = "niemand";
-        private string DisplayPeopleTodayBirthday(IHost host)
-        {
-            var result = GetAllPersons(host.Services);
-            //Person _person = new Person();
-
-            foreach (var item in result)
-            {
-                if (item.BirthdayDate.Month == DateTime.Now.Month && item.BirthdayDate.Day == DateTime.Now.Day)
-                {
-                    _person = item.FullName;
-                }
-            }
-            return _person;
         }
 
         private IReplyMarkup GetButtons()
