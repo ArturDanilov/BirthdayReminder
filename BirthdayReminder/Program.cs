@@ -3,6 +3,7 @@ using BirthdayReminder.Services;
 using BirthdayReminder.Telegram;
 using BirthdayReminder.UI;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Hosting;
 
 namespace BirthdayReminder
@@ -12,6 +13,12 @@ namespace BirthdayReminder
         static void Main(string[] args)
         {
             //Зависимость регистрируется в контейнере служб
+            //A host is an object that encapsulates an app's resources, such as:
+            //- Dependency injection(DI)
+            //- Logging
+            //- Configuration
+            //- IHostedService implementations
+            
             using IHost host = Host
             .CreateDefaultBuilder(args)
             .ConfigureServices(services =>

@@ -2,6 +2,7 @@
 using BirthdayReminder.Models;
 using BirthdayReminder.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Moq;
 
 namespace BirthdayReminderNUnitTests
@@ -12,6 +13,89 @@ namespace BirthdayReminderNUnitTests
         public void Setup()
         {
         }
+
+        [Test]
+        public void GetAllPersons_()
+        {
+            // Arrange
+
+            // Act
+
+            //Assert
+        }
+        [Test]
+        public void DisplayAllPeople_()
+        {
+            // Arrange
+
+            // Act
+
+            //Assert
+        }
+        [Test]
+        public void DisplayPeopleTodayBirthday_()
+        {
+            // Arrange
+
+            // Act
+
+            //Assert
+        }
+        [Test]
+        public void DisplayPeopleTomorowBirthday_()
+        {
+            // Arrange
+
+            // Act
+
+            //Assert
+        }
+        [Test]
+        public void CreateNewPerson_()
+        {
+            // Arrange
+
+            // Act
+
+            //Assert
+        }
+        [Test]
+        public void CreatePersonBirthdayToday_()
+        {
+            // Arrange
+
+            // Act
+
+            //Assert
+        }
+        [Test]
+        public void ReloadDb_()
+        {
+            // Arrange
+
+            // Act
+
+            //Assert
+        }
+
+
+
+
+
+        //[Test]
+        //public void DisplayPeopleTodayBirthday_CallsAddPersonFromContextOne2()
+        //{
+        //    // Arrange           
+        //    var mockDbContext = new Mock<IDatabaseContext>();
+        //    Person newPerson = new Person();
+        //    mockDbContext.Setup(x => x.AddPersonFromContext(newPerson));
+        //    PersonService personService = new PersonService(mockDbContext.Object);
+
+        //    // Act
+        //    personService.DisplayPeopleTodayBirthday();
+
+        //    //Assert
+        //}
 
         [Test]
         public void PersonService_CallAddPersonFromContextOne()
@@ -33,13 +117,12 @@ namespace BirthdayReminderNUnitTests
             //Assert
             mockDbContext.Verify(x => x.People, Times.Once());
         }
+
         [Test]
         public void AddPersonFromService_CallsAddPersonFromContextOne()
         {
-            // Arrange
-           
+            // Arrange           
             var mockDbContext = new Mock<IDatabaseContext>();  //IDatabaseContext databasecontext = new DatabaseContext();
-
             Person newPerson = new Person();
             mockDbContext.Setup(x => x.AddPersonFromContext(newPerson));
             PersonService personService = new PersonService(mockDbContext.Object); //new PersonService(databasecontext)
