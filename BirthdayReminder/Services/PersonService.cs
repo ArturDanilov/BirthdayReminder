@@ -15,16 +15,16 @@ namespace BirthdayReminder.Services
 
         public List<Person> PeopleList() => _context.People.ToList();
 
-        
+
         public List<Person> GetAllPersons(IServiceProvider services)
         {
             IPersonService personService = services.GetRequiredService<IPersonService>();// new PersonService(new DatabaseContext());
             return personService.PeopleList();
         }
-        
-        
 
-        
+
+
+
         public void DisplayPeopleTodayBirthday(IHost host)
         {
             var result = GetAllPersons(host.Services);
@@ -36,15 +36,15 @@ namespace BirthdayReminder.Services
                     && item.BirthdayDate.Day == DateTime.Now.Day)
                 {
                     //_person = item;
-                    Console.WriteLine(item.FirstName 
-                        + " " + item.LastName 
+                    Console.WriteLine(item.FirstName
+                        + " " + item.LastName
                         + " wurde an diesem schönen Tag geboren");
                 }
             }
         }
 
 
-        
+
         //public void DisplayPeopleTodayBirthdayNoHost()
         //{
         //    var result = GetAllPersonsNoHost();
@@ -105,8 +105,8 @@ namespace BirthdayReminder.Services
                 if (item.BirthdayDate.Month == DateTime.Now.Month && item.BirthdayDate.Day == DateTime.Now.Day + 1)
                 {
                     //_person = item;
-                    Console.WriteLine(item.FirstName 
-                        + " " + item.LastName 
+                    Console.WriteLine(item.FirstName
+                        + " " + item.LastName
                         + "  hätte an diesem schönen Tag geboren werden können, wurde aber morgen geboren");
                 }
             }
@@ -170,7 +170,7 @@ namespace BirthdayReminder.Services
         public List<Person> Find29FebruarBirthday(DateTime date) => _context.People
             .Where(x => x.BirthdayDate.Month == 02 && x.BirthdayDate.Day == 29)
             .ToList();
-        
+
         public void AddPersonFromPersonService(Person person) => _context
             .AddPersonFromContext(person);
 

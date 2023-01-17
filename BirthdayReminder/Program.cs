@@ -19,8 +19,6 @@ namespace BirthdayReminder
             //- Configuration
             //- IHostedService implementations
 
-
-
             //using IHost host = Host
             //.CreateDefaultBuilder(args)
             //.ConfigureServices(services =>
@@ -32,21 +30,23 @@ namespace BirthdayReminder
             //})
             //.Build();
 
-            //IDatabaseContext databaseContext = host.Services.GetRequiredService<IDatabaseContext>(); //?
+            //IDatabaseContext databaseContext = host.Services.GetRequiredService<IDatabaseContext>();
+
+            //var consoleUI = new ConsoleUI();
+            //consoleUI.ConsoleStart(host, databaseContext);
 
 
-
-            var services = new ServiceCollection()
-                .AddSingleton<IDatabaseContext>(providerNoHost => providerNoHost.GetService<DatabaseContext>())
+            var servicesNoHost = new ServiceCollection()
+                .AddDbContext<DatabaseContext>()
+                .AddSingleton<IDatabaseContext>(provider => provider.GetService<DatabaseContext>())
                 .AddSingleton<ITelegramService, TelegramService>()
                 .AddSingleton<IPersonService, PersonService>()
                 .BuildServiceProvider();
 
-            var dbContext = services.GetRequiredService<IDatabaseContext>();
+            var dbContext = servicesNoHost.GetRequiredService<IDatabaseContext>();
 
-            var consoleUI = new ConsoleUI();
-            //consoleUI.ConsoleStart(host, databaseContext);
-            consoleUI.ConsoleStart(services, dbContext);
+            var consoleUI = new ConsoleUI_IServiceProvider();
+            consoleUI.ConsoleStart(servicesNoHost, dbContext);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace BirthdayReminder.UI
                 "\n5 - Wer ist heute geboren?" +
                 "\n6 - Wer ist morgen geboren?" +
                 "\n7 - Wollen wir jemand gratulieren?" +
+                "\n8 - Wer ist 29.02 geboren?" +
                 "\n0 - App schließen" +
                 "\n\nDeine Auswahl ist...");
 
@@ -25,7 +26,7 @@ namespace BirthdayReminder.UI
             {
                 selectedAction = Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.White;
-                var service = new PersonServiceIServiceProvider(context);
+                var service = new PersonService_IServiceProvider(context);
 
                 switch (selectedAction)
                 {
@@ -66,6 +67,9 @@ namespace BirthdayReminder.UI
                             default:
                                 break;
                         }
+                        break;
+                    case "8":
+                        service.Find29Februar(provider);
                         break;
                     case "0":
                         Console.ForegroundColor = ConsoleColor.Red;

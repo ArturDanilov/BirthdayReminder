@@ -5,10 +5,10 @@ using Microsoft.Extensions.Hosting;
 
 namespace BirthdayReminder.Services
 {
-    public class PersonServiceIServiceProvider
+    public class PersonService_IServiceProvider
     {
         private readonly IDatabaseContext _context;
-        public PersonServiceIServiceProvider(IDatabaseContext context)
+        public PersonService_IServiceProvider(IDatabaseContext context)
         {
             _context = context;
         }
@@ -75,7 +75,7 @@ namespace BirthdayReminder.Services
                     //_person = item;
                     Console.WriteLine(item.FirstName
                         + " " + item.LastName
-                        + "  hätte an diesem schönen Tag geboren werden können, wurde aber morgen geboren");
+                        + " hätte an diesem schönen Tag geboren werden können, wurde aber morgen geboren");
                 }
             }
         }
@@ -120,6 +120,7 @@ namespace BirthdayReminder.Services
             context.AddPersonFromContext(new Person("Müll", "Reiner", new DateTime(2023, 01, 02).Date, "benz@adesso.com"));
             context.AddPersonFromContext(new Person("Bier", "Wilma", new DateTime(2023, 01, 03).Date, "wilmaBier@adesso.com"));
             context.AddPersonFromContext(new Person("Huana", "Mary", new DateTime(2023, 01, 04).Date, "bot4@adesso.com"));
+            context.AddPersonFromContext(new Person("Strike", "Lucky", new DateTime(1992, 02, 29).Date, "bot4@adesso.com"));
 
             context.SaveChanges();
         }
@@ -135,7 +136,19 @@ namespace BirthdayReminder.Services
             .Where(x => x.BirthdayDate == date)
             .ToList();
 
-        public List<Person> Find29FebruarBirthday(DateTime date) => _context.People
+        public void Find29Februar(IServiceProvider services)
+        {
+            IPersonService personService = services.GetRequiredService<IPersonService>();
+            var list = personService.PeopleList()
+                .Where(x => x.BirthdayDate.Month == 02 && x.BirthdayDate.Day == 29)
+                .ToList();
+
+            foreach (var item in list)
+            {
+                Console.WriteLine(item.FullName + "\n");
+            }
+        }
+        public List<Person> Find29FebruarBirthday() => _context.People
             .Where(x => x.BirthdayDate.Month == 02 && x.BirthdayDate.Day == 29)
             .ToList();
 
