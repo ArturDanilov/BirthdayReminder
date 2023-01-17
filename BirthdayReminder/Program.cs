@@ -12,14 +12,6 @@ namespace BirthdayReminder
     {
         static void Main(string[] args)
         {
-            //var servicesNoHost = new ServiceCollection()
-            //    .AddSingleton<IDatabaseContext>(providerNoHost => providerNoHost.GetService<DatabaseContext>())
-            //    .AddSingleton<ITelegramService, TelegramService>()
-            //    .AddSingleton<IPersonService, PersonService>()
-            //    .BuildServiceProvider() ;
-
-            //var dbContext = servicesNoHost.GetRequiredService<IDatabaseContext>();
-
             //Зависимость регистрируется в контейнере служб
             //A host is an object that encapsulates an app's resources, such as:
             //- Dependency injection(DI)
@@ -28,22 +20,33 @@ namespace BirthdayReminder
             //- IHostedService implementations
 
 
-            using IHost host = Host
-            .CreateDefaultBuilder(args)
-            .ConfigureServices(services =>
-            {
-                services.AddDbContext<DatabaseContext>() //return new DatabasContext();
-                        .AddScoped<IPersonService, PersonService>() //AddScoped службы создаются один раз для каждого запроса (подключения) клиента
-                        .AddSingleton<ITelegramService, TelegramService>()//singelton работает столько сколько работает сервис
-                        .AddSingleton<IDatabaseContext>(provider => provider.GetService<DatabaseContext>());
-            })
-            .Build();
 
-            IDatabaseContext databaseContext = host.Services.GetRequiredService<IDatabaseContext>(); //?
+            //using IHost host = Host
+            //.CreateDefaultBuilder(args)
+            //.ConfigureServices(services =>
+            //{
+            //    services.AddDbContext<DatabaseContext>() //return new DatabasContext();
+            //            .AddScoped<IPersonService, PersonService>() //AddScoped - Services are created once for each client request (connection)
+            //            .AddSingleton<ITelegramService, TelegramService>()//singelton - works as long as the service works
+            //            .AddSingleton<IDatabaseContext>(provider => provider.GetService<DatabaseContext>());
+            //})
+            //.Build();
+
+            //IDatabaseContext databaseContext = host.Services.GetRequiredService<IDatabaseContext>(); //?
+
+
+
+            var services = new ServiceCollection()
+                .AddSingleton<IDatabaseContext>(providerNoHost => providerNoHost.GetService<DatabaseContext>())
+                .AddSingleton<ITelegramService, TelegramService>()
+                .AddSingleton<IPersonService, PersonService>()
+                .BuildServiceProvider();
+
+            var dbContext = services.GetRequiredService<IDatabaseContext>();
 
             var consoleUI = new ConsoleUI();
-            consoleUI.ConsoleStart(host, databaseContext);
-            //consoleUI.ConsoleStart(servicesNoHost, dbContext);
+            //consoleUI.ConsoleStart(host, databaseContext);
+            consoleUI.ConsoleStart(services, dbContext);
         }
     }
 }

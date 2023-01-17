@@ -142,7 +142,7 @@ namespace BirthdayReminderNUnitTests
             PersonService personService = new PersonService(mockDbContext.Object);
 
             // Act
-            var actual = personService.AllPeople();
+            var actual = personService.PeopleList();
 
             //Assert
             mockDbContext.Verify(x => x.People, Times.Once());

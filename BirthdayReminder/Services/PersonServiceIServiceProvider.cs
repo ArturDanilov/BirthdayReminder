@@ -5,10 +5,10 @@ using Microsoft.Extensions.Hosting;
 
 namespace BirthdayReminder.Services
 {
-    public class PersonService : IPersonService
+    public class PersonServiceIServiceProvider
     {
         private readonly IDatabaseContext _context;
-        public PersonService(IDatabaseContext context)
+        public PersonServiceIServiceProvider(IDatabaseContext context)
         {
             _context = context;
         }
@@ -23,74 +23,42 @@ namespace BirthdayReminder.Services
         }
         
         
-
-        
-        public void DisplayPeopleTodayBirthday(IHost host)
+        public void DisplayPeopleTodayBirthday(IServiceProvider services)
         {
-            var result = GetAllPersons(host.Services);
-            //var _person = new Person();
+            IPersonService personService = services.GetRequiredService<IPersonService>();// new PersonService(new DatabaseContext());
+            var list = personService.PeopleList();
 
-            foreach (var item in result)
+            foreach (var item in list)
             {
                 if (item.BirthdayDate.Month == DateTime.Now.Month
                     && item.BirthdayDate.Day == DateTime.Now.Day)
                 {
                     //_person = item;
-                    Console.WriteLine(item.FirstName 
-                        + " " + item.LastName 
+                    Console.WriteLine(item.FirstName
+                        + " " + item.LastName
                         + " wurde an diesem schönen Tag geboren");
                 }
             }
         }
 
-
-        
-        //public void DisplayPeopleTodayBirthdayNoHost()
-        //{
-        //    var result = GetAllPersonsNoHost();
-        //    //var _person = new Person();
-
-        //    foreach (var item in result)
-        //    {
-        //        if (item.BirthdayDate.Month == DateTime.Now.Month
-        //            && item.BirthdayDate.Day == DateTime.Now.Day)
-        //        {
-        //            //_person = item;
-        //            Console.WriteLine(item.FirstName 
-        //                + " " + item.LastName 
-        //                + " wurde an diesem schönen Tag geboren");
-        //        }
-        //    }
-        //}
-        //public List<Person> GetAllPersonsNoHost(IServiceProvider servicesNoHost)//????
-        //{
-        //    IPersonService personService = servicesNoHost
-        //        .GetRequiredService<IPersonService>();// new PersonService(new DatabaseContext());
-        //    return personService.AllPeople();
-        //}
-
-
-
-
-
-        public void DisplayAllPeople(IHost host)
+        public void DisplayAllPeople(IServiceProvider services)
         {
-            var result = GetAllPersons(host.Services);
-            foreach (var item in result)
+            IPersonService personService = services.GetRequiredService<IPersonService>();
+            var list = personService.PeopleList();
+
+            foreach (var item in list)
                 Console.WriteLine(item.FullName
                     .ToString() + " | " + item.BirthdayDate.Date
                     .ToString("dd/MM/yyyy") + " | " + item.Email
                     .ToString() + "\n");
         }
 
-
-
-        public void DisplayPeopleTomorowBirthday(IHost host)
+        public void DisplayPeopleTomorowBirthday(IServiceProvider services)
         {
-            var result = GetAllPersons(host.Services);
-            //var _person = new Person();
+            IPersonService personService = services.GetRequiredService<IPersonService>();
+            var list = personService.PeopleList();
 
-            foreach (var item in result)
+            foreach (var item in list)
             {
                 if (item.BirthdayDate.Month == DateTime.Now.Month
                     && item.BirthdayDate.Day == DateTime.Now.Day
@@ -105,8 +73,8 @@ namespace BirthdayReminder.Services
                 if (item.BirthdayDate.Month == DateTime.Now.Month && item.BirthdayDate.Day == DateTime.Now.Day + 1)
                 {
                     //_person = item;
-                    Console.WriteLine(item.FirstName 
-                        + " " + item.LastName 
+                    Console.WriteLine(item.FirstName
+                        + " " + item.LastName
                         + "  hätte an diesem schönen Tag geboren werden können, wurde aber morgen geboren");
                 }
             }
@@ -170,7 +138,7 @@ namespace BirthdayReminder.Services
         public List<Person> Find29FebruarBirthday(DateTime date) => _context.People
             .Where(x => x.BirthdayDate.Month == 02 && x.BirthdayDate.Day == 29)
             .ToList();
-        
+
         public void AddPersonFromPersonService(Person person) => _context
             .AddPersonFromContext(person);
 
